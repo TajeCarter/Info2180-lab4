@@ -1,14 +1,20 @@
-/*Taje Carter
+/*
+INFO2180 Lab 4- MAZE
+Taje Carter
 620079694 
 */
 
 
-
 window.onload = function() {
-    $("boundary1").onmouseover = overBoundary;
+    var boundaries = document.querySelectorAll(".boundary");
+    for (var i = 0; i < boundaries.length; i++) {
+        boundaries[i].onmouseover = overBoundary;
+    }
 };
 
 function overBoundary() {
-    // $("boundary1").style.backgroundColor = "#ff8888";
-    $("boundary1").addClassName("youlose");
+    var boundaries = document.querySelectorAll(".boundary");
+    for (var i = 0; i < boundaries.length; i++) {
+        boundaries[i].style.backgroundColor = "#ff8888";
+    }
 }

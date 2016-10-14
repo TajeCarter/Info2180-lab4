@@ -13,6 +13,13 @@ window.onload = function() {
     {
         boundaries[i].onmouseover = overAllBoundary;
     }
+    // Starts game; resets walls
+    var game_start = document.getElementbyId("start");
+    game_start.onclick = clickStart;
+
+    // Alerts completion of maze
+    var end_game = document.getElementbyId("end");
+    end_game.onmouseover = message; 
 };
 
 //Glows red on hover
@@ -27,11 +34,22 @@ function overAllBoundary() {
 
 //Alert Messages
 function message() {
-    if (loser){
+    if (loser)
+    {
         alert ("Sorry, you lost. Try Again :[");
     } 
-    else{
+    else
+    {
         alert ("Yay, you won! :]");
     }
 }
 
+//Click event
+function clickStart() {
+    loser == false;
+    var boundaries = document.querySelectorAll("div#maze div.boundary");
+    for (var i = 0; i < boundaries.length; i++)
+    {
+        boundaries[i].classList.remove("youlose");
+    }
+}

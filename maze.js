@@ -5,61 +5,70 @@ Taje Carter
 */
 
 "use strict";
-
 var loser = false; //If user hits a wall; loses
 
 window.onload = function() {
-    var boundaries = document.querySelectorAll("div#maze div.boundary");
-    for (var i = 0; i < boundaries.length; i++) 
+    var boundaries = [];
+    boundaries = document.querySelectorAll("div#maze div.boundary");
+    for(var i = 0; i < boundaries.length; i++) 
     {
         boundaries[i].onmouseover = overAllBoundary;
     }
 
     // Starts game; resets walls
-    var game_start = document.getElementbyId("start");
+    var game_start = document.getElementById("start");
     game_start.onclick = clickStart;
 
     // Alerts completion of maze
-    var end_game = document.getElementbyId("end");
+    var end_game = document.getElementById("end");
     end_game.onmouseover = message; 
 };
 
 //Glows red on hover
-function overAllBoundary() {
-    loser = true; 
-    var boundaries = document.querySelectorAll("div#maze div.boundary");
-    for (var i = 0; i < boundaries.length; i++) 
+function overAllBoundary(event) {
+
+    if(loser == false)
     {
-        boundaries[i].addClassName = ("youlose");
+        loser = true; 
+        var boundaries = [];
+        boundaries = document.querySelectorAll("div#maze div.boundary");
+        for(var i = 0; i < boundaries.length; i++) 
+        {
+            boundaries[i].classList.add("youlose");
+        }
+        event.stopPropagation(); 
+        return false;
     }
 }
 
 //Alert Messages
 function message() {
-    if (!loser)
+    if(!loser)
     {
-        document.getElementbyId("status").innerHTML = ("Yay, you won! :]");
+        document.getElementById("status").innerHTML = ("Yay, you won! :]");
     } 
     else
     {
-        document.getElementbyId("status").innerHTML = ("Sorry, you lost. Try Again :[");
+        document.getElementById("status").innerHTML = ("Sorry, you lost. Try Again :[");
     }
 }
 
 //Click event; walls and game reset
 function clickStart() {
     loser = false;
-    document.getElementbyId("status").innerHTML = (" Click \"S\" to begin and find the end!"); 
-    var boundaries = document.querySelectorAll("div#maze div.boundary");
-    for (var i = 0; i < boundaries.length; i++)
+    var boundaries = [];
+    document.getElementById("status").innerHTML = "Click \"S\" to begin and find the end!"; 
+    boundaries = document.querySelectorAll("div#maze div.boundary");
+    for(var i = 0; i < boundaries.length; i++)
     {
-        boundaries[i].removeClassName("youlose");
+        boundaries[i].classList.remove("youlose");
     }
 }
 
+
 //Anti-Cheating function
-document.onmouseover = function (val){
-    var maze=document.getElementById("maze");
+ document.maze.onmouseover = function(event){
+    var maze = document.getElementById("maze");
 
     var top = maze.offsetTop;
     var bottom = maze.offsetBottom;
@@ -67,19 +76,19 @@ document.onmouseover = function (val){
     var right = maze.offsetRight;
     var height = maze.offsetHeight;
     var width = maze.offsetWidth;
-    var x = val.clientX;
-    var y = val.clientY;
+    var x = event.clientX;
+    var y = event.clientY;
 
     var boundaries = document.querySelectorAll("div#maze div.boundary");
 
 
-  if((y<top)||(y>bottom)||(x<left)||(x>right))
-  {
-    for (var i = 0; i < boundaries.length; i++)
+    if((y<top)||(y>bottom)||(x<left)||(x>right))
     {
-      boundaries[i].removeClassName("youlose");
-      document.getElementbyId("status").innerHTML = ("Sorry, You Lose!:[");
-    }
+        for (var i = 0; i < boundaries.length; i++)
+        {
+          boundaries[i].classList.remove("youlose");
+          document.getElementById("status").innerHTML = ("Sorry, You Lose!:[");
+        }
       
     }
 
